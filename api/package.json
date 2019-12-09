@@ -1,0 +1,19 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Nodejs api for the simple shopping cart",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "mocha 'src/tests/*.spec.js'"
+  },
+  "author": "DaemonWill",
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "express": "^4.17.1",
+    "mocha": "^6.2.2",
+    "sinon": "^1.17.7"
+  }
+}
