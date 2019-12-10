@@ -28,6 +28,7 @@ After running `npm install` in the api directory, feel free to:
 * use a `PUT` request to update an existing shoppingCart's items at `/api/shopping-carts/:id` and passing in an `items : ["id1", "id2"]` key value pair to the req.body
 
 ## Using the UI
+Using all of the ui features will require the api server to be running as well.
 
 After running `npm install` in the ui directory, you can:
 * run tests using : `npm test`
