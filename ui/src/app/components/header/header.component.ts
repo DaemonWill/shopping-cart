@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor() { }
+  constructor(private modalService : NgbModal,
+              private storageService : StorageService) { }
 
   ngOnInit() {
+    if(!this.shoppingCart){
+      this.shoppingCart = this.storageService.getCurrentCart();
+    }
   }
 
+  @Input() shoppingCart : any = this.storageService.getCurrentCart();
+
+  open(content){
+    this.modalService.open(content);
+  }
 }

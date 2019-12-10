@@ -1,0 +1,13 @@
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+
+body{
+  margin: 0rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0rem !important;
+  background-color: #f2f2f2f2;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

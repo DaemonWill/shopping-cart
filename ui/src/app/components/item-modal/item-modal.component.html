@@ -1,1 +1,23 @@
-<p>item-modal works!</p>
+<div class="modal-header">
+  <h4 class="header">Add to Cart</h4>
+</div>
+<div class="modal-body" *ngIf="item">
+  <div class="item-details">
+    <form #addItemForm="ngForm">
+      <div>
+        <b class="d-inline mr-2">Item : </b>
+        <p class="d-inline">{{item.description}}</p>
+      </div>
+      <div>
+        <b class="d-inline mr-2">Amount : </b>
+        <input type="number" class="form-control d-inline input-amount" [(ngModel)]="itemAmount"
+        name="amount" id="amount" #amount="ngModel" min="0" required>
+      </div>
+    </form>
+  </div>
+  <div class="total-cost">
+    <b class="d-inline">Total Price : </b>
+    <b class="d-inline total-price">{{calculateTotal() | currency: 'USD'}}</b>
+  </div>
+  <button class="btn btn-md btn-warning add-btn" (click)="addToCart()">Add</button>
+</div>

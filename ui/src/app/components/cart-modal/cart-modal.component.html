@@ -1,1 +1,23 @@
-<p>cart-modal works!</p>
+<div class="modal-header">
+  <h4 class="header">Your Cart</h4>
+</div>
+<div class="modal-body row" *ngIf="shoppingCart">
+  <div class="col-md-7 col-12 item-list">
+    <div class="mb-4" *ngFor="let i of shoppingCart.items">
+      <b class="d-inline mr-2">{{i.description}} - </b>
+      <p class="d-inline"> Unit Price: </p>
+      <b class="d-inline item-price">{{i.unit_price | currency: 'USD'}}</b>
+    </div>
+  </div>
+  <div class="col-md-5 col-12 clear-cart">
+    <div class="mb-2">
+      <b class="d-inline">Total : </b>
+      <b class="d-inline total-price">{{shoppingCart.total || 0 | currency: 'USD'}}</b>
+    </div>
+    <div class="mb-4">
+      <b class="d-inline">Saved : </b>
+      <b class="d-inline saved-price">{{calculateRoughTotal() - shoppingCart.total | currency: 'USD'}}</b>
+    </div>
+    <button class="btn btn-md btn-danger" (click)="clearCart()">Clear Cart</button>
+  </div>
+</div>

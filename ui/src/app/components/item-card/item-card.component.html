@@ -1,1 +1,20 @@
-<p>item-card works!</p>
+<div class="card-header" *ngIf="item.description">
+  <h4 class="item-description">{{item.description}}</h4>
+</div>
+<div class="card-body">
+  <div *ngIf="item.unit_price">
+    <b class="d-inline">1 </b>
+    <p class="d-inline">for </p>
+    <b class="d-inline">{{item.unit_price | currency: 'USD'}}</b>
+  </div>
+  <div *ngFor="let d of item.volume_discounts">
+    <b class="d-inline">{{d.number}} </b>
+    <p class="d-inline">for </p>
+    <b class="d-inline">{{d.price | currency: 'USD'}}</b>
+  </div>
+</div>
+<button class="btn btn-primary btn-md item-btn" (click)="open(addItem)">Add Item</button>
+
+<ng-template #addItem let-modal>
+  <app-item-modal [item]="item"></app-item-modal>
+</ng-template>

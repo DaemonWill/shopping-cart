@@ -1,0 +1,11 @@
+div.item-cards{
+  height: 100%;
+  padding: 1rem !important;
+  margin: 5rem 0rem;
+  position: relative;
+  z-index: 50;
+}
+div.card{
+  max-height: 15rem;
+  overflow-y: auto;
+}

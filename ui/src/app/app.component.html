@@ -1,3 +1,7 @@
-<app-header></app-header>
-<app-item-card></app-item-card>
+<app-header [shoppingCart]="shoppingCart"></app-header>
+<div class="col-12 card-deck item-cards">
+  <div class="card" *ngFor="let i of items">
+    <app-item-card [item]="i"></app-item-card>
+  </div>
+</div>
 <app-footer></app-footer>

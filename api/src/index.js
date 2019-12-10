@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const itemsRouter = require("./routes/items-route");
 const shoppingCartsRouter = require("./routes/shopping-carts-route");
@@ -11,6 +12,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+//allow cross origin from the angular ui project
+app.use(cors());
 //allow endpoints handled by each of the router modules
 app.use(itemsRouter);
 app.use(shoppingCartsRouter);

@@ -1,0 +1,22 @@
+input.input-amount{
+  width: 30%;
+  max-width: 30%;
+  height: 2rem;
+}
+div.item-details{
+  margin: auto auto 2rem auto;
+}
+div.total-cost{
+  margin: auto auto 1rem auto;
+}
+button.add-btn{
+  float: right;
+  color: white;
+  margin-bottom: 1rem;
+}
+button.add-btn:hover{
+  background-color: palegoldenrod;
+}
+b.total-price{
+  color: goldenrod;
+}

@@ -9,11 +9,10 @@ import { Observable, of } from 'rxjs';
 export class ShoppingCartApiService {
   constructor(private http: HttpClient) { }
 
-  private baseUrl : string = "localhost:5000/api/";
+  private baseUrl : string = "http://localhost:5000/api/";
 
-  public postData(endpoint : string, query : any) : Observable<any>{
+  public postData(endpoint : string, data : any) : Observable<any>{
     let url = this.baseUrl + endpoint;
-    let data = encodeURIComponent(JSON.stringify(query));
     return this.http.post(url, data);
   }
 
@@ -22,9 +21,8 @@ export class ShoppingCartApiService {
     return this.http.get(url);
   }
 
-  public putData(endpoint : string, query : any) : Observable<any>{
+  public putData(endpoint : string, data : any) : Observable<any>{
     let url = this.baseUrl + endpoint;
-    let data = encodeURIComponent(JSON.stringify(query));
     return this.http.put(url, data);
   }
 }

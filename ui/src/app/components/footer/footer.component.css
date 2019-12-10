@@ -1,0 +1,12 @@
+div.footer{
+  text-align: center;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: slategrey;
+  background-color: white;
+  border-top: 0.1rem solid lightgrey;
+  position: fixed;
+  bottom: 0rem;
+  left: 0rem;
+  z-index: 100;
+}
