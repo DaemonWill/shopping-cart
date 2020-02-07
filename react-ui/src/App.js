@@ -114,30 +114,30 @@ class App extends React.Component {
     });
   }
 
-	render() {
+  render() {
     this.assignCart();
     this.assignItems();
-		return (
-			<div className="app-body">
+    return (
+      <div className="app-body">
         <Header shoppingCart = {this.state.shoppingCart}
                 onCartModalToggle = {this.onCartModalToggle}
         ></Header>
         <div class="col-12 card-deck item-cards">
           {this.generateItemCards()}
         </div>
-				<Footer></Footer>
-        <ItemModal  item = {this.state.selectedItem}
+        <Footer></Footer>
+        <ItemModal item = {this.state.selectedItem}
                     showModal = {this.state.itemModal}
                     onItemModalToggle = {this.onItemModalToggle}
                     totalItemCost = {this.state.totalItemCost}
                     onUpdateTotalItemCost = {this.onUpdateTotalItemCost}
                     addItemsToCart = {this.addItemsToCart}
         ></ItemModal>
-        <CartModal  shoppingCart = {this.state.shoppingCart}
+        <CartModal shoppingCart = {this.state.shoppingCart}
                     showModal = {this.state.cartModal}
                     onCartModalToggle = {this.onCartModalToggle}
         ></CartModal>
-			</div>
+      </div>
 		);
 	};
 }
