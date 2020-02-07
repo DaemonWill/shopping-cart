@@ -6,7 +6,7 @@ A simple shopping cart api and ui using nodejs and angular
 Travis builds: https://travis-ci.com/DaemonWill/shopping-cart
 
 ## Overview
-This repo contains two projects that go hand-in-hand, an api for managing/viewing shopping carts/purchasable items, and a ui for interacting with the api as a user
+This repo contains three projects that go hand-in-hand, an api for managing/viewing shopping carts/purchasable items, and a ui (one in Angular [the default] and a supplemental ui in React) for interacting with the api as a user
 
 ## Requirements
 
@@ -14,7 +14,7 @@ This repo contains two projects that go hand-in-hand, an api for managing/viewin
 
 ## Setup
 
-You can load each of the project dependencies by running an `npm install` in their root folders (/ui and /api)
+You can load each of the project dependencies by running an `npm install` in their root folders (/ui, /react-ui, and /api)
 
 ## Using the API
 
@@ -27,12 +27,25 @@ After running `npm install` in the api directory, feel free to:
 * use a `POST` request to add a new shoppingCart at `/api/shopping-carts/`
 * use a `PUT` request to update an existing shoppingCart's items at `/api/shopping-carts/:id` and passing in an `items : ["id1", "id2"]` key value pair to the req.body
 
-## Using the UI
+## Using the UI (Default - Angular)
 Using all of the ui features will require the api server to be running as well.
 
 After running `npm install` in the ui directory, you can:
 * run tests using : `npm test`
 * start the server at port **4200** with `npm start`
+* Add individual items to your shopping cart
+* View how much you'll save by applying discounts
+* Clear items from your cart
+* View items from the API
+* Fetch a shoppingCart from the api
+* etc
+
+## Using the React-UI
+Using all of the ui features will require the api server to be running as well.
+
+After running `npm install` in the react-ui directory, you can:
+* run tests using : `npm test`
+* start the server at port **3000** with `npm start` (the browser tab should open and reload automagically)
 * Add individual items to your shopping cart
 * View how much you'll save by applying discounts
 * Clear items from your cart

@@ -1,0 +1,16 @@
+div.card{
+  height: 15rem;
+  max-height: 15rem;
+  overflow-y: auto;
+}
+div.card-header{
+  text-align: center;
+}
+div.card-body{
+  position: relative;
+}
+button.item-btn{
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
