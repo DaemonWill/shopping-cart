@@ -5,16 +5,14 @@ import Currency from 'react-currency-formatter';
 class ItemModal extends React.Component {
   constructor(props){
     super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.onAddItemsToCart = this.onAddItemsToCart.bind(this);
   };
 
-  handleChange(event){
-    console.log("here");
+  //triggers after the item count input has been updated on the ui, update total item cost
+  handleChange = (event) => {
     this.props.onUpdateTotalItemCost(event.target.value);
   }
 
-  onAddItemsToCart(){
+  onAddItemsToCart = () => {
     //setup a list of item ids to update the cart in the db
     let itemList = [];
     let itemAmount = parseInt(document.getElementById("amount").value);

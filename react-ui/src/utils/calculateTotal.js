@@ -1,6 +1,6 @@
 /*
-* Calculate shoppingCart.total by analyzing the items in the cart
-* @params{cart<Object>}
+* Calculate the total for any group of items with the discount
+* @params{item<Object>, itemCount<Number>}
 * @return{total<Number>}
 */
 const calculateTotal = function(item, itemCount){

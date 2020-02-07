@@ -4,10 +4,10 @@ import './Header.css';
 class Header extends React.Component {
   render(){
     let cartIcon;
-    //check if a shoppingCart object was fetched from the api
+    //try to render only if a shoppingCart object was fetched from the api
     if(this.props.shoppingCart){
       cartIcon =  (
-        <h5 className="cart-icon">
+        <h5 className="cart-icon" onClick={this.props.onCartModalToggle}>
           <i className="fas fa-shopping-cart cart-icon"></i>
           <span className="badge badge-pill badge-warning cart-badge">
             {this.props.shoppingCart.items.length}

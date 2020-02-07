@@ -6,7 +6,7 @@ class ShoppingCartService {
 
   /*
   * @params - endpoint <String>, data <Object>
-  * @returns - async response<Object>
+  * @returns - Promise<Object>
   */
   postData(endpoint, data){
     let url = BASE_URL + endpoint;
@@ -15,7 +15,7 @@ class ShoppingCartService {
 
   /*
   * @params - endpoint <String>
-  * @returns - async response<Object>
+  * @returns - Promise<Object>
   */
   getData(endpoint){
     let url = BASE_URL + endpoint;
@@ -31,8 +31,7 @@ class ShoppingCartService {
     return (
       axios.put(url, data)
         .then((response => {
-          console.log(response);
-          return response.data;
+          return response;
         }))
         .catch((err) => {
           console.log(err);

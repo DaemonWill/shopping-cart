@@ -5,10 +5,9 @@ import Currency from 'react-currency-formatter';
 class ItemCard extends React.Component {
   constructor(props){
     super(props);
-    this.handleClick = this.handleClick.bind(this);
   };
 
-  //list off the applicable discounts for each item
+  //list off the applicable discounts for each item in the ui
   generateVolumeDiscounts(){
     let volumeDiscounts = [];
     for(let d of this.props.item.volume_discounts){
@@ -25,8 +24,8 @@ class ItemCard extends React.Component {
     return volumeDiscounts;
   }
 
-  //have the applicable item be selected, and toggle the itemModal
-  handleClick(){
+  //have this prop's item be set as the state's selectedItem, toggle the item modal
+  handleClick = () => {
     this.props.onSelectItem(this.props.item);
     this.props.onItemModalToggle();
   }
