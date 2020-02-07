@@ -1,16 +1,26 @@
-div.card{
-  height: 15rem;
-  max-height: 15rem;
-  overflow-y: auto;
+div.modal{
+  background-color: rgba(0, 0, 0, 0.8);
 }
-div.card-header{
-  text-align: center;
+input.input-amount{
+  width: 30%;
+  max-width: 30%;
+  height: 2rem;
 }
-div.card-body{
-  position: relative;
+div.item-details{
+  margin: auto auto 2rem auto;
 }
-button.item-btn{
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+div.total-cost{
+  margin: auto auto 1rem auto;
+}
+button.add-btn, button.cancel-btn{
+  float: right;
+  color: white;
+  margin-right: 0.5rem;
+  margin-left: 1rem;
+}
+button.add-btn:hover, button.cancel-btn:hover{
+  color: white;
+}
+b.total-price{
+  color: goldenrod;
 }

@@ -3,6 +3,11 @@ import './Item-Card.css';
 import Currency from 'react-currency-formatter';
 
 class ItemCard extends React.Component {
+  constructor(props){
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  };
+
   //list off the applicable discounts for each item
   generateVolumeDiscounts(){
     let volumeDiscounts = [];
@@ -20,8 +25,10 @@ class ItemCard extends React.Component {
     return volumeDiscounts;
   }
 
-  openAddItemModal(){
-    //do something
+  //have the applicable item be selected, and toggle the itemModal
+  handleClick(){
+    this.props.onSelectItem(this.props.item);
+    this.props.onItemModalToggle();
   }
 
   render(){
@@ -51,7 +58,9 @@ class ItemCard extends React.Component {
           {unitPrice}
           {this.generateVolumeDiscounts()}
         </div>
-        <button className="btn btn-primary btn-md item-btn" onClick={this.openAddItemModal}>Add Item</button>
+        <button className="btn btn-primary btn-md item-btn" onClick={this.handleClick}>
+          Add Item
+        </button>
       </div>
     );
   }
