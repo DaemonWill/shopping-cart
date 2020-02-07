@@ -138,8 +138,8 @@ class App extends React.Component {
                     onCartModalToggle = {this.onCartModalToggle}
         ></CartModal>
       </div>
-		);
-	};
+    );
+  };
 }
 
 export default App;
