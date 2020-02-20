@@ -74,7 +74,7 @@ export default function App(){
     let endpoint = "shopping-carts/" + shoppingCart.id;
     shoppingCartService.putData(endpoint, {"items" : itemList})
       .then((response) => {
-        setShoppingCart(response.shoppingCart);
+        setShoppingCart(response.data.shoppingCart);
       })
       .catch((err) => {
         console.log(err);
@@ -85,7 +85,8 @@ export default function App(){
   return (
     <div className="app-body">
       <Header shoppingCart = {shoppingCart}
-              onCartModalToggle = {toggleCartModal}
+              showCartModal = {showCartModal}
+              toggleCartModal = {toggleCartModal}
       ></Header>
       <div className="col-12 card-deck item-cards">
         {generateItemCards()}
