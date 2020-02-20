@@ -4,7 +4,7 @@ import calculateTotal from '../../utils/calculateTotal';
 import Currency from 'react-currency-formatter';
 
 export default function ItemModal(props){
-  //define conditional styling options for the modal
+  //initialize/define conditional styling options for the modal
   let modalBody;
   let modalStyle = (props.showItemModal) ? { display: "block" } : { display: "none" };
 
@@ -28,7 +28,7 @@ export default function ItemModal(props){
     //use the shoppingCart service to update the items in the carts
     props.addItemsToCart(itemList);
     //hide the modal after the operation
-    props.toggleItemModal();
+    props.toggleItemModal(!props.showItemModal);
   }
 
   //generate the modalbody element if the selectedItem exists and has been assigned
@@ -44,7 +44,7 @@ export default function ItemModal(props){
             <div>
               <b className="d-inline mr-2"> Amount : </b>
               <input type="number" className="form-control d-inline input-amount" name="amount"
-                      id="amount" min="0" required onchange={updateTotalItemCost}/>
+                      id="amount" min="0" required onChange={updateTotalItemCost}/>
             </div>
           </form>
         </div>
@@ -54,8 +54,8 @@ export default function ItemModal(props){
             <Currency quantity={props.totalItemCost} currency="USD"/>
           </b>
         </div>
-        <button className="btn btn-md btn-warning add-btn" onclick={onAddItemsToCart}>Add</button>
-        <button className="btn btn-md btn-danger cancel-btn" onclick={props.toggleItemModal}>Cancel</button>
+        <button className="btn btn-md btn-warning add-btn" onClick={onAddItemsToCart}>Add</button>
+        <button className="btn btn-md btn-danger cancel-btn" onClick={props.toggleItemModal}>Cancel</button>
       </div>
     );
   }

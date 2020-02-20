@@ -59,8 +59,9 @@ export default function App(){
         //add a new item-card to the ui list to be returned
         itemCards.push(
           <ItemCard item = {item}
-                    onSelectItem = {setSelectedItem}
-                    onItemModalToggle = {toggleItemModal}
+                    setSelectedItem = {setSelectedItem}
+                    showItemModal = {showItemModal}
+                    toggleItemModal = {toggleItemModal}
           ></ItemCard>
         );
       }
