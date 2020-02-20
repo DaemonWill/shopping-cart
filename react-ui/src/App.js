@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import ItemCard from './components/item-card/Item-Card';
@@ -10,75 +10,27 @@ import logo from './logo.svg';
 import './App.css';
 const shoppingCartService = new ShoppingCartService();
 
-class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      shoppingCart : null,
-      items : null,
-      selectedItem : null,
-      itemModal : false,
-      cartModal : false,
-      totalItemCost : 0
-    };
-  };
+export default function App(){
+  //define initial state values
+  const [shoppingCart, setShoppingCart] = useState(null);
+  const [items, setItems] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [showItemModal, toggleItemModal] = useState(false);
+  const [showCartModal, toggleCartModal] = useState(false);
+  const [totalItemCost, setTotalItemCost] = useState(0);
 
-  //create new cart using the api
-  assignCart(){
-    if(!this.state.shoppingCart){
-      shoppingCartService.postData("shopping-carts", {})
-        .then((response) => {
-          this.setState({
-            shoppingCart : response.data.shoppingCart
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          alert(err.message || err.error);
-        })
-    }
-  }
+  //upon initialization, fetch the shoppingCart and items from the API
+  useEffect(() => {
+    assignCart();
+    assignItems();
+  }, []);
 
-  //populate the store's items from the db if not already populated
-  assignItems(){
-    if(!this.state.items){
-      shoppingCartService.getData("items")
-        .then((response) => {
-          this.setState({
-            items : response.data.items
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          alert(err.message || err.error);
-        })
-    }
-  }
-
-  //Create a ui list of item-cards given the current items in the store
-  generateItemCards(){
-    let itemCards = [];
-    if(this.state.items){
-      for(let item of this.state.items){
-        itemCards.push(
-          <ItemCard item = {item}
-                    onSelectItem = {this.onSelectItem}
-                    onItemModalToggle = {this.onItemModalToggle}
-          ></ItemCard>
-        );
-      }
-    }
-    return itemCards;
-  }
-
-  //have the api update the cart (as well as update the cart in state)
-  addItemsToCart = (itemList) => {
-    let endpoint = "shopping-carts/" + this.state.shoppingCart.id;
-    shoppingCartService.putData(endpoint, {"items" : itemList})
+  //create new cart using the API
+  const assignCart = function(){
+    shoppingCartService.postData("shopping-carts", {})
       .then((response) => {
-        this.setState({
-          shoppingCart : response.shoppingCart
-        });
+        //upon a successful response, set the app's shoppingCart obj
+        setShoppingCart(response.data.shoppingCart);
       })
       .catch((err) => {
         console.log(err);
@@ -86,60 +38,77 @@ class App extends React.Component {
       })
   }
 
-  //set the state's selectedItem to the item-card that tirggers this
-  onSelectItem = (item) => {
-    this.setState({
-      selectedItem : item
-    });
+  //populate the store's items from the db if not already populated
+  const assignItems = function(){
+    shoppingCartService.getData("items")
+      .then((response) => {
+        //upon successful response, populate the items obj in state
+        setItems(response.data.items);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err.message || err.error);
+      })
   }
 
-  //toggle the bool that controls item modal visibility
-  onItemModalToggle = () => {
-    this.setState({
-      itemModal : !this.state.itemModal
-    });
+  //Create a ui list of item-cards given the current items in the store
+  const generateItemCards = function(){
+    let itemCards = [];
+    //make sure items are present from the api
+    if(items){
+      for(let item of items){
+        //add a new item-card to the ui list to be returned
+        itemCards.push(
+          <ItemCard item = {item}
+                    onSelectItem = {setSelectedItem}
+                    onItemModalToggle = {toggleItemModal}
+          ></ItemCard>
+        );
+      }
+    }
+    return itemCards;
   }
 
-  //toggle the bool that controls cart modal visibility
-  onCartModalToggle = () => {
-    this.setState({
-      cartModal : !this.state.cartModal
-    });
+  //have the api update the current cart in state
+  const addItemsToCart = function(itemList){
+    let endpoint = "shopping-carts/" + shoppingCart.id;
+    shoppingCartService.putData(endpoint, {"items" : itemList})
+      .then((response) => {
+        setShoppingCart(response.shoppingCart);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err.message || err.error);
+      })
   }
 
-  //set the total item amount cost of the state's selectedItem for viewing in the item modal
-  onUpdateTotalItemCost = (itemCount) => {
-    this.setState({
-      totalItemCost : calculateTotal(this.state.selectedItem, itemCount)
-    });
-  }
-
-  render() {
-    this.assignCart();
-    this.assignItems();
-    return (
-      <div className="app-body">
-        <Header shoppingCart = {this.state.shoppingCart}
-                onCartModalToggle = {this.onCartModalToggle}
-        ></Header>
-        <div class="col-12 card-deck item-cards">
-          {this.generateItemCards()}
-        </div>
-        <Footer></Footer>
-        <ItemModal item = {this.state.selectedItem}
-                    showModal = {this.state.itemModal}
-                    onItemModalToggle = {this.onItemModalToggle}
-                    totalItemCost = {this.state.totalItemCost}
-                    onUpdateTotalItemCost = {this.onUpdateTotalItemCost}
-                    addItemsToCart = {this.addItemsToCart}
-        ></ItemModal>
-        <CartModal shoppingCart = {this.state.shoppingCart}
-                    showModal = {this.state.cartModal}
-                    onCartModalToggle = {this.onCartModalToggle}
-        ></CartModal>
+  return (
+    <div className="app-body">
+      <Header shoppingCart = {shoppingCart}
+              onCartModalToggle = {toggleCartModal}
+      ></Header>
+      <div className="col-12 card-deck item-cards">
+        {generateItemCards()}
       </div>
-    );
-  };
+      <Footer></Footer>
+      <ItemModal item = {selectedItem}
+                  showModal = {showItemModal}
+                  onItemModalToggle = {toggleItemModal}
+                  totalItemCost = {totalItemCost}
+                  onUpdateTotalItemCost = {setTotalItemCost}
+                  addItemsToCart = {addItemsToCart}
+      ></ItemModal>
+      <CartModal shoppingCart = {shoppingCart}
+                  showModal = {showCartModal}
+                  onCartModalToggle = {toggleCartModal}
+      ></CartModal>
+    </div>
+  )
 }
-
-export default App;
+/*
+onUpdateTotalItemCost = (itemCount) => {
+  this.setState({
+    totalItemCost : calculateTotal(this.state.selectedItem, itemCount)
+  });
+}
+*/
