@@ -100,8 +100,8 @@ export default function App(){
                   addItemsToCart = {addItemsToCart}
       ></ItemModal>
       <CartModal shoppingCart = {shoppingCart}
-                  showModal = {showCartModal}
-                  onCartModalToggle = {toggleCartModal}
+                  showCartModal = {showCartModal}
+                  toggleCartModal = {toggleCartModal}
       ></CartModal>
     </div>
   )

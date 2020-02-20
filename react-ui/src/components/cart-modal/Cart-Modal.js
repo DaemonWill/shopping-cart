@@ -3,11 +3,16 @@ import './Cart-Modal.css';
 import Currency from 'react-currency-formatter';
 import calculateRoughTotal from '../../utils/calculateRoughTotal';
 
-class CartModal extends React.Component {
-  //list off each item assigned to the cart in the ui
-  generateCartItems(){
+export default function CartModal(props){
+  //define/initialize some condional ui elements to be generated
+  let modalBody;
+  let modalStyle = (props.showCartModal) ? { display: "block" } : { display: "none" };
+
+  //generate a list of each item assigned to the cart in the ui
+  const generateCartItems = function(){
     let cartItems = [];
-    for(let item of this.props.shoppingCart.items){
+    for(let item of props.shoppingCart.items){
+      //add element to the list
       cartItems.push(
         <div className="mb-4">
           <b className="d-inline mr-2">{item.description} - </b>
@@ -21,54 +26,53 @@ class CartModal extends React.Component {
     return cartItems;
   }
 
+  //trigger when user clicks the cancel button, toggle cart modal
+  const handleClick = function(){
+    props.toggleCartModal(!props.showCartModal);
+  }
+
   //reload cart app with fresh cart (leaving room for clearing cache and db cart)
-  onClearCart(){
+  const onClearCart = function(){
     window.location.reload();
   }
 
-  render(){
-    let modalBody;
-    let modalStyle = (this.props.showModal) ? { display: "block" } : { display: "none" };
-
-    if(this.props.shoppingCart){
-      modalBody = (
-        <div className="modal-body row">
-          <div className="col-md-7 col-12 item-list">
-            {this.generateCartItems()}
-          </div>
-          <div className="col-md-5 col-12 clear-cart">
-            <div className="mb-2">
-              <b className="d-inline">Total : </b>
-              <b className="d-inline total-price">
-                <Currency quantity={this.props.shoppingCart.total || 0} currency="USD"/>
-              </b>
-            </div>
-            <div className="mb-4">
-              <b className="d-inline">Saved : </b>
-              <b className="d-inline saved-price">
-                <Currency quantity={calculateRoughTotal(this.props.shoppingCart) - this.props.shoppingCart.total || 0} currency="USD"/>
-              </b>
-            </div>
-            <button className="btn btn-md btn-warning clear-btn" onClick={this.onClearCart}>Clear Cart</button>
-            <button className="btn btn-md btn-danger cancel-btn" onClick={this.props.onCartModalToggle}>Cancel</button>
-          </div>
+  //condionally generate the modal-body if shoppingCart exists and is assigned
+  if(props.shoppingCart){
+    modalBody = (
+      <div className="modal-body row">
+        <div className="col-md-7 col-12 item-list">
+          {generateCartItems()}
         </div>
-      )
-    }
-
-    return (
-      <div className="modal" id="cartModal" tabindex="-1" style={modalStyle}>
-        <div className="modal-dialog modal-dialog-centered modal-lg">
-          <div class="modal-content">
-            <div className="modal-header">
-              <h4 className="header">Your Cart</h4>
-            </div>
-            {modalBody}
+        <div className="col-md-5 col-12 clear-cart">
+          <div className="mb-2">
+            <b className="d-inline">Total : </b>
+            <b className="d-inline total-price">
+              <Currency quantity={props.shoppingCart.total || 0} currency="USD"/>
+            </b>
           </div>
+          <div className="mb-4">
+            <b className="d-inline">Saved : </b>
+            <b className="d-inline saved-price">
+              <Currency quantity={calculateRoughTotal(props.shoppingCart) - props.shoppingCart.total || 0} currency="USD"/>
+            </b>
+          </div>
+          <button className="btn btn-md btn-warning clear-btn" onClick={onClearCart}>Clear Cart</button>
+          <button className="btn btn-md btn-danger cancel-btn" onClick={handleClick}>Cancel</button>
         </div>
       </div>
     );
   }
-}
 
-export default CartModal;
+  return (
+    <div className="modal" id="cartModal" tabindex="-1" style={modalStyle}>
+      <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h4 className="header">Your Cart</h4>
+          </div>
+          {modalBody}
+        </div>
+      </div>
+    </div>
+  )
+}
