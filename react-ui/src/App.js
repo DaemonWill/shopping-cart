@@ -5,7 +5,6 @@ import ItemCard from './components/item-card/Item-Card';
 import ItemModal from './components/item-modal/Item-Modal';
 import CartModal from './components/cart-modal/Cart-Modal';
 import ShoppingCartService from './services/shopping-cart-service';
-import calculateTotal from './utils/calculateTotal';
 import logo from './logo.svg';
 import './App.css';
 const shoppingCartService = new ShoppingCartService();
@@ -91,11 +90,11 @@ export default function App(){
         {generateItemCards()}
       </div>
       <Footer></Footer>
-      <ItemModal item = {selectedItem}
-                  showModal = {showItemModal}
-                  onItemModalToggle = {toggleItemModal}
+      <ItemModal selectedItem = {selectedItem}
+                  showItemModal = {showItemModal}
+                  toggleItemModal = {toggleItemModal}
                   totalItemCost = {totalItemCost}
-                  onUpdateTotalItemCost = {setTotalItemCost}
+                  setTotalItemCost = {setTotalItemCost}
                   addItemsToCart = {addItemsToCart}
       ></ItemModal>
       <CartModal shoppingCart = {shoppingCart}
@@ -105,10 +104,3 @@ export default function App(){
     </div>
   )
 }
-/*
-onUpdateTotalItemCost = (itemCount) => {
-  this.setState({
-    totalItemCost : calculateTotal(this.state.selectedItem, itemCount)
-  });
-}
-*/

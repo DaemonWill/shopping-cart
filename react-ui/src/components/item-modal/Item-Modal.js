@@ -1,18 +1,20 @@
 import React from 'react';
 import './Item-Modal.css';
+import calculateTotal from '../../utils/calculateTotal';
 import Currency from 'react-currency-formatter';
 
-class ItemModal extends React.Component {
-  constructor(props){
-    super(props);
-  };
+export default function ItemModal(props){
+  //define conditional styling options for the modal
+  let modalBody;
+  let modalStyle = (props.showItemModal) ? { display: "block" } : { display: "none" };
 
-  //triggers after the item count input has been updated on the ui, update total item cost
-  handleChange = (event) => {
-    this.props.onUpdateTotalItemCost(event.target.value);
+  //triggers upon a user updating the total item amount, update totalItemCost
+  const updateTotalItemCost = function(event){
+    props.setTotalItemCost(calculateTotal(props.selectedItem, event.target.value));
   }
 
-  onAddItemsToCart = () => {
+  //triggers upon a user clicking the add button, validate the item count and update the items in cart
+  const onAddItemsToCart = function(){
     //setup a list of item ids to update the cart in the db
     let itemList = [];
     let itemAmount = parseInt(document.getElementById("amount").value);
@@ -21,59 +23,53 @@ class ItemModal extends React.Component {
       return;
     }
     for(let count = 0; count < itemAmount; count++){
-      itemList.push(this.props.item.id);
+      itemList.push(props.selectedItem.id);
     }
     //use the shoppingCart service to update the items in the carts
-    this.props.addItemsToCart(itemList);
+    props.addItemsToCart(itemList);
     //hide the modal after the operation
-    this.props.onItemModalToggle();
+    props.toggleItemModal();
   }
 
-  render(){
-    let modalBody;
-    let modalStyle = (this.props.showModal) ? { display: "block" } : { display: "none" };
-
-    if(this.props.item){
-      modalBody = (
-        <div className="modal-body">
-          <div className="item-details">
-            <form>
-              <div>
-                <b className="d-inline mr-2">Item : </b>
-                <p className="d-inline">{this.props.item.description}</p>
-              </div>
-              <div>
-                <b className="d-inline mr-2">Amount : </b>
-                <input type="number" className="form-control d-inline input-amount" name="amount" id="amount" min="0" required
-                        onChange={this.handleChange}/>
-              </div>
-            </form>
-          </div>
-          <div className="total-cost">
-            <b className="d-inline">Total Price : </b>
-            <b className="d-inline total-price">
-              <Currency quantity={this.props.totalItemCost} currency="USD"/>
-            </b>
-          </div>
-          <button className="btn btn-md btn-warning add-btn" onClick={this.onAddItemsToCart}>Add</button>
-          <button className="btn btn-md btn-danger cancel-btn" onClick={this.props.onItemModalToggle}>Cancel</button>
-        </div>
-      );
-    }
-
-    return (
-      <div className="modal" id="itemModal" tabindex="-1" style={modalStyle}>
-        <div className="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div className="modal-header">
-              <h4 className="header">Add to Cart</h4>
+  //generate the modalbody element if the selectedItem exists and has been assigned
+  if(props.selectedItem){
+    modalBody = (
+      <div className="modal-body">
+        <div className="item-details">
+          <form>
+            <div>
+              <b className="d-inline mr-2">Item : </b>
+              <p className="d-inline">{props.selectedItem.description}</p>
             </div>
-            {modalBody}
-          </div>
+            <div>
+              <b className="d-inline mr-2"> Amount : </b>
+              <input type="number" className="form-control d-inline input-amount" name="amount"
+                      id="amount" min="0" required onchange={updateTotalItemCost}/>
+            </div>
+          </form>
         </div>
+        <div className="total-cost">
+          <b className="d-inline">Total Price : </b>
+          <b className="d-inline total-price">
+            <Currency quantity={props.totalItemCost} currency="USD"/>
+          </b>
+        </div>
+        <button className="btn btn-md btn-warning add-btn" onclick={onAddItemsToCart}>Add</button>
+        <button className="btn btn-md btn-danger cancel-btn" onclick={props.toggleItemModal}>Cancel</button>
       </div>
     );
   }
-}
 
-export default ItemModal;
+  return (
+    <div className="modal" id="itemModal" tabindex="-1" style={modalStyle}>
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h4 className="header">Add to Cart</h4>
+          </div>
+          {modalBody}
+        </div>
+      </div>
+    </div>
+  )
+}
