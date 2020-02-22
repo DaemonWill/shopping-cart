@@ -8,24 +8,6 @@ export default function CartModal(props){
   let modalBody;
   let modalStyle = (props.showCartModal) ? { display: "block" } : { display: "none" };
 
-  //generate a list of each item assigned to the cart in the ui
-  const generateCartItems = function(){
-    let cartItems = [];
-    for(let item of props.shoppingCart.items){
-      //add element to the list
-      cartItems.push(
-        <div className="mb-4">
-          <b className="d-inline mr-2">{item.description} - </b>
-          <p className="d-inline"> Unit Price: </p>
-          <b className="d-inline item-price">
-            <Currency quantity={item.unit_price} currency="USD"/>
-          </b>
-        </div>
-      );
-    }
-    return cartItems;
-  }
-
   //trigger when user clicks the cancel button, toggle cart modal
   const handleClick = function(){
     props.toggleCartModal(!props.showCartModal);
@@ -41,7 +23,17 @@ export default function CartModal(props){
     modalBody = (
       <div className="modal-body row">
         <div className="col-md-7 col-12 item-list">
-          {generateCartItems()}
+          {props.shoppingCart.items.map((item) => {
+            return (
+              <div className="mb-4">
+                <b className="d-inline mr-2">{item.description} - </b>
+                <p className="d-inline"> Unit Price: </p>
+                <b className="d-inline item-price">
+                  <Currency quantity={item.unit_price} currency="USD"/>
+                </b>
+              </div>
+            )
+          })}
         </div>
         <div className="col-md-5 col-12 clear-cart">
           <div className="mb-2">

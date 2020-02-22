@@ -6,23 +6,6 @@ export default function ItemCard(props){
   //initialize placeholder values for conditional ui elements
   let cardHeader, unitPrice;
 
-  //generate a list of applicable discounts for each item in the ui
-  const generateVolumeDiscounts = function(){
-    let volumeDiscounts = [];
-    for(let d of props.item.volume_discounts){
-      volumeDiscounts.push(
-        <div>
-          <b className="d-inline">{d.number} </b>
-          <p className="d-inline">for </p>
-          <b className="d-inline">
-            <Currency quantity={d.price} currency="USD"/>
-          </b>
-        </div>
-      );
-    }
-    return volumeDiscounts;
-  }
-
   //triggers upon clickint the add item button, set the selected item & open item-modal
   const handleClick = function(){
     props.setSelectedItem(props.item);
@@ -54,7 +37,17 @@ export default function ItemCard(props){
       {cardHeader}
       <div className="card-body">
         {unitPrice}
-        {generateVolumeDiscounts()}
+        {props.item.volume_discounts.map((volumeDiscount) => {
+          return (
+            <div>
+              <b className="d-inline">{volumeDiscount.number} </b>
+              <p className="d-inline">for </p>
+              <b className="d-inline">
+                <Currency quantity={volumeDiscount.price} currency="USD"/>
+              </b>
+            </div>
+          )
+        })}
       </div>
       <button className="btn btn-primary btn-md item-btn" onClick={handleClick}>
         Add Item

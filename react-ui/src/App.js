@@ -12,7 +12,7 @@ const shoppingCartService = new ShoppingCartService();
 export default function App(){
   //define initial state values
   const [shoppingCart, setShoppingCart] = useState(null);
-  const [items, setItems] = useState(null);
+  const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [showItemModal, toggleItemModal] = useState(false);
   const [showCartModal, toggleCartModal] = useState(false);
@@ -50,25 +50,6 @@ export default function App(){
       })
   }
 
-  //Create a ui list of item-cards given the current items in the store
-  const generateItemCards = function(){
-    let itemCards = [];
-    //make sure items are present from the api
-    if(items){
-      for(let item of items){
-        //add a new item-card to the ui list to be returned
-        itemCards.push(
-          <ItemCard item = {item}
-                    setSelectedItem = {setSelectedItem}
-                    showItemModal = {showItemModal}
-                    toggleItemModal = {toggleItemModal}
-          ></ItemCard>
-        );
-      }
-    }
-    return itemCards;
-  }
-
   //have the api update the current cart in state
   const addItemsToCart = function(itemList){
     let endpoint = "shopping-carts/" + shoppingCart.id;
@@ -89,7 +70,15 @@ export default function App(){
               toggleCartModal = {toggleCartModal}
       ></Header>
       <div className="col-12 card-deck item-cards">
-        {generateItemCards()}
+        {items.map((item) => {
+          return (
+            <ItemCard item = {item}
+                      setSelectedItem = {setSelectedItem}
+                      showItemModal = {showItemModal}
+                      toggleItemModal = {toggleItemModal}
+            ></ItemCard>
+          )
+        })}
       </div>
       <Footer></Footer>
       <ItemModal selectedItem = {selectedItem}
