@@ -1,5 +1,5 @@
 # shopping-cart
-A simple shopping cart api and ui using nodejs and angular
+A simple shopping cart api (node.js) using both an angular ui and a react ui
 
 [![Build Status](https://travis-ci.com/DaemonWill/shopping-cart.svg?branch=master)](https://travis-ci.com/DaemonWill/shopping-cart)
 
